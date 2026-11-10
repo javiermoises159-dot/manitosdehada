@@ -624,7 +624,7 @@ details.it summary{font-weight:600;color:var(--osc);cursor:pointer}
     <h1>Hoy</h1>
     <section class="panel">
       <h2>Pegar reserva</h2>
-      <p class="small">Copia el mensaje de WhatsApp de la clienta (el que termina con «Ref: JO·…») y pégalo aquí: la cita se crea sola en la agenda y esa hora deja de aparecer libre para las demás.</p>
+      <p class="small">Copia el mensaje de WhatsApp de la clienta (el que termina con «Ref: JO·…») y pégalo aquí: la cita se crea sola en tu agenda.</p>
       <textarea id="paste-in" rows="3" placeholder="Pega aquí el mensaje de la clienta"></textarea>
       <button class="btn" type="button" id="paste-go">Crear cita</button>
       <p class="status" id="paste-status"></p>
@@ -670,7 +670,7 @@ details.it summary{font-weight:600;color:var(--osc);cursor:pointer}
     </section>
     <section class="panel">
       <h2>Bloquear horas</h2>
-      <p class="small">Para un día libre, un turno fuera de la página o un descanso. Esas horas no aparecen para las clientas.</p>
+      <p class="small">Para un día libre, un turno fuera de la página o un descanso. Así lo tienes anotado en tu agenda.</p>
       <div class="row"><input id="b-date" type="date"><input id="b-from" type="time" step="900" value="09:30"><input id="b-to" type="time" step="900" value="19:00"></div>
       <button class="btn ghost" id="b-add" type="button">Bloquear</button>
       <p class="status" id="b-status"></p>
@@ -1524,7 +1524,7 @@ $("paste-go").addEventListener("click", async () => {
   try {
     const ref = await db.collection("appts").add({ name: nmx, serviceId: s.id, service: nmEs(s) + (m[6] ? " (" + m[6].trim() + ")" : ""), date: m[2], time: m[3], phone: m[5] || "", price: pr > 0 ? pr : s.price, done: false, src: (m[7] || "").trim(), ref: (m[8] || "").trim() });
     if (ref && ref.id) await db.collection("busy").doc(ref.id).set({ date: m[2], time: m[3], min: s.min, kind: "appt" }).catch(() => {});
-    $("paste-in").value = ""; setStatus("paste-status", "Cita creada: " + nmx + " · " + esDate(m[2]) + " " + m[3] + " · " + nmEs(s) + ". Esa hora ya no aparece libre.");
+    $("paste-in").value = ""; setStatus("paste-status", "Cita creada: " + nmx + " · " + esDate(m[2]) + " " + m[3] + " · " + nmEs(s) + ".");
   } catch (err) { setStatus("paste-status", saveErr(err), true); }
 });
 

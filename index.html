@@ -852,41 +852,35 @@ const PMU_UNTIL = "2027-01-15";
 let SERVICES = [
   { id:"pmup", cat:"promo", ic:"✨", price:80, before:100, min:90, promo:true, until:PMU_UNTIL, fotos:[12,8,9,10,14,15,16,20], care:"micro",
     opts:[{es:"1 zona",it:"1 zona",price:80},{es:"2 zonas",it:"2 zone",price:100}],
-    es:{ short:"Maquillaje permanente", name:"Maquillaje permanente en promo", desc:"1 por 80 € o 2 por 100 € (precio normal 100 € cada uno). Cejas, labios o efecto sombreado: dile cuál en el comentario." },
-    it:{ short:"Trucco permanente", name:"Trucco permanente in promo", desc:"1 a 80 € o 2 a 100 € (prezzo normale 100 € l'uno). Sopracciglia, labbra o effetto sfumato: indicalo nel commento." } },
+    es:{ short:"Maquillaje permanente", name:"Maquillaje permanente en promo", desc:"1 por 80 € o 2 por 100 € (precio normal 100 € cada uno). Cejas, labios o delineado de ojos: dile cuál en el comentario." },
+    it:{ short:"Trucco permanente", name:"Trucco permanente in promo", desc:"1 a 80 € o 2 a 100 € (prezzo normale 100 € l'uno). Sopracciglia, labbra o eyeliner: indicalo nel commento." } },
   { id:"ext", cat:"lash", ic:"👁️", price:30, min:20, known:true, fotos:[0,1,2,4,6], care:"lash",
-    opts:[{es:"Solo para mí",it:"Solo per me",msg:{es:"solo para mí",it:"solo per me"},price:30},{es:"2 personas (tú + una amiga) · promo",it:"2 persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
+    opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:30},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
     es:{ name:"Extensión de pestañas 1x1", desc:"Punto por punto, a prueba de agua · duran de 2 a 3 semanas · ven con una amiga: 2 por 50 €" },
     it:{ name:"Extension ciglia 1x1", desc:"Ciglio per ciglio, resistenti all'acqua · durano 2–3 settimane · vieni con un'amica: 2 a 50 €" } },
   { id:"xlash", cat:"lash", ic:"✨", price:30, min:20, known:true, fotos:[3,5,7], care:"lash",
-    opts:[{es:"Solo para mí",it:"Solo per me",msg:{es:"solo para mí",it:"solo per me"},price:30},{es:"2 personas (tú + una amiga) · promo",it:"2 persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
-    es:{ name:"Extensión de pestañas extra lash", desc:"Más largas y con más volumen · duran de 2 a 3 semanas · ven con una amiga: 2 por 50 €" },
-    it:{ name:"Extension ciglia extra lash", desc:"Più lunghe e voluminose · durano 2–3 settimane · vieni con un'amica: 2 a 50 €" } },
+    opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:30},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
+    es:{ name:"Extensión de pestañas 1x1 extra lash", desc:"Más largas y con más volumen · duran de 2 a 3 semanas · ven con una amiga: 2 por 50 €" },
+    it:{ name:"Extension ciglia 1x1 extra lash", desc:"Più lunghe e voluminose · durano 2–3 settimane · vieni con un'amica: 2 a 50 €" } },
   { id:"riz", cat:"lash", ic:"🌀", price:40, min:45, care:"lift",
-    opts:[{es:"Solo para mí",it:"Solo per me",msg:{es:"solo para mí",it:"solo per me"},price:40},{es:"2 personas (tú + una amiga) · promo",it:"2 persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:60}],
+    opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:40},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:60}],
     es:{ name:"Rizado de pestañas", desc:"A prueba de agua · ven con una amiga: 2 por 60 €" }, it:{ name:"Laminazione ciglia", desc:"Resistente all'acqua · vieni con un'amica: 2 a 60 €" } },
   { id:"plan", cat:"lash", ic:"〰️", price:30, min:45, fotos:[11], care:"lift",
-    opts:[{es:"Solo para mí",it:"Solo per me",msg:{es:"solo para mí",it:"solo per me"},price:30},{es:"2 personas (tú + una amiga) · promo",it:"2 persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
+    opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:30},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
     es:{ name:"Planchado de cejas", desc:"Laminado y fijación · ven con una amiga: 2 por 50 €" }, it:{ name:"Laminazione sopracciglia", desc:"Laminazione e fissaggio · vieni con un'amica: 2 a 50 €" } },
-  { id:"mcej", cat:"pmu", ic:"✏️", price:100, min:90, fotos:[12,8,9,10,14,15], care:"micro", ba:true, promoRef:"pmup",
-    es:{ name:"Micropigmentación de cejas", desc:"Diseño a medida y medición para que queden simétricas · más de 3 años de duración" },
-    it:{ name:"Pigmentazione sopracciglia", desc:"Disegno su misura e misurazione per renderle simmetriche · dura più di 3 anni" } },
-  { id:"msom", cat:"pmu", ic:"🎨", price:100, min:60, known:true, fotos:[13,8,9], care:"micro", ba:true, promoRef:"pmup",
-    es:{ name:"Cejas efecto sombreado", desc:"Ideal si ya tienes una micropigmentación anterior · dura de 3 a 5 años" },
-    it:{ name:"Sopracciglia effetto sfumato", desc:"Ideale se hai già una pigmentazione precedente · dura 3–5 anni" } },
-  { id:"mlab", cat:"pmu", ic:"💋", price:100, min:90, fotos:[18,19,22,23,20,21,16,17], care:"micro", promoRef:"pmup",
-    es:{ name:"Micropigmentación de labios", desc:"Diseño previo, color y contorno · más de 3 años de duración" },
-    it:{ name:"Pigmentazione labbra", desc:"Disegno preliminare, colore e contorno · dura più di 3 anni" } },
+  { id:"mcej", cat:"pmu", ic:"✏️", price:100, min:90, fotos:[12,8,9,10,14,15,18,19,22,23,20,21,16,17], care:"micro", ba:true, promoRef:"pmup",
+    es:{ name:"Micropigmentación de cejas - labios - delineado de ojos", desc:"Diseño a medida · más de 3 años de duración · elige cejas, labios o delineado de ojos y díselo a Jossi en el comentario" },
+    it:{ name:"Pigmentazione sopracciglia - labbra - eyeliner", desc:"Disegno su misura · dura più di 3 anni · scegli sopracciglia, labbra o eyeliner e indicalo nel commento" } },
   { id:"glu", cat:"body", ic:"🍑", price:50, min:60, fotos:[25,26,24,27,28,29,30], care:"body",
-    opts:[{es:"1 sesión",it:"1 seduta",price:50},
-      {es:"Paquete 1 · 2 sesiones",it:"Pacchetto 1 · 2 sedute",price:90},
-      {es:"Paquete 2 · 3 sesiones",it:"Pacchetto 2 · 3 sedute",price:126},
-      {es:"Paquete 3 · 4 sesiones (120 €) + 1 peptona (100 €)",it:"Pacchetto 3 · 4 sedute (120 €) + 1 peptone (100 €)",price:220},
-      {es:"Paquete 4 · 6 sesiones (240 €) + 2 peptonas (190 €)",it:"Pacchetto 4 · 6 sedute (240 €) + 2 peptoni (190 €)",price:430}],
+    opts:[{es:"Una sesión",it:"Una seduta",price:50},
+      {es:"1er paquete - dos sesiones",it:"1° pacchetto - due sedute",price:90},
+      {es:"2do paquete - tres sesiones",it:"2° pacchetto - tre sedute",price:126},
+      {es:"3er paquete - cuatro sesiones + una peptona",it:"3° pacchetto - quattro sedute + un peptone",price:220},
+      {es:"4to paquete - seis sesiones + dos peptonas",it:"4° pacchetto - sei sedute + due peptoni",price:430}],
     es:{ name:"Levantamiento de glúteos", desc:"Ondas rusas + masoterapia + electrodos · 50 € por sesión o en paquetes" },
     it:{ name:"Lifting glutei", desc:"Correnti russe + massoterapia + elettrodi · 50 € a seduta o a pacchetti" } },
   { id:"rej", cat:"face", ic:"🌸", price:120, min:60, care:"face",
-    opts:[{es:"1 sesión",it:"1 seduta",price:120},{es:"Paquete 1 · 3 sesiones",it:"Pacchetto 1 · 3 sedute",price:330},{es:"Paquete 2 · 5 sesiones",it:"Pacchetto 2 · 5 sedute",price:450}],
+    opts:[{es:"Una sesión",it:"Una seduta",price:120},{es:"1er paquete - tres sesiones",it:"1° pacchetto - tre sedute",price:330},{es:"2do paquete - cinco sesiones",it:"2° pacchetto - cinque sedute",price:450}],
     es:{ name:"Rejuvenecimiento facial", desc:"Con PDRN (esperma de salmón) · 120 € por sesión · paquetes de 3 y 5 sesiones" },
     it:{ name:"Ringiovanimento viso", desc:"Con PDRN (DNA di salmone) · 120 € a seduta · pacchetti da 3 e 5 sedute" } },
   { id:"limp", cat:"face", ic:"🫧", price:80, min:60, care:"face",
@@ -956,17 +950,17 @@ let GAL = [
   {c:"brow",es:"Antes y después",it:"Prima e dopo",src:"fotos/g11.jpg",svc:"mcej"},
   {c:"brow",es:"Planchado de cejas",it:"Laminazione sopracciglia",src:"fotos/g12.jpg",svc:"plan"},
   {c:"brow",es:"Medición para cejas simétricas",it:"Misurazione per sopracciglia simmetriche",src:"fotos/g13.jpg",svc:"mcej"},
-  {c:"brow",es:"Efecto sombreado",it:"Effetto sfumato",src:"fotos/g14.jpg",svc:"msom"},
+  {c:"brow",es:"Efecto sombreado",it:"Effetto sfumato",src:"fotos/g14.jpg",svc:"mcej"},
   {c:"brow",es:"Micropigmentación de cejas",it:"Pigmentazione sopracciglia",src:"fotos/g15.jpg",svc:"mcej"},
   {c:"brow",es:"Resultado natural",it:"Risultato naturale",src:"fotos/g16.jpg",svc:"mcej"},
-  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g17.jpg",svc:"mlab"},
-  {c:"lips",es:"Labios + cejas",it:"Labbra + sopracciglia",src:"fotos/g18.jpg",svc:"mlab"},
-  {c:"lips",es:"Antes",it:"Prima",src:"fotos/g19.jpg",svc:"mlab"},
-  {c:"lips",es:"Diseño previo a medida",it:"Disegno preliminare su misura",src:"fotos/g20.jpg",svc:"mlab"},
-  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g21.jpg",svc:"mlab"},
-  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g22.jpg",svc:"mlab"},
-  {c:"lips",es:"Durante el procedimiento",it:"Durante il trattamento",src:"fotos/g23.jpg",svc:"mlab"},
-  {c:"lips",es:"Micropigmentación de labios",it:"Pigmentazione labbra",video:"fotos/labios.mp4",svc:"mlab"},
+  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g17.jpg",svc:"mcej"},
+  {c:"lips",es:"Labios + cejas",it:"Labbra + sopracciglia",src:"fotos/g18.jpg",svc:"mcej"},
+  {c:"lips",es:"Antes",it:"Prima",src:"fotos/g19.jpg",svc:"mcej"},
+  {c:"lips",es:"Diseño previo a medida",it:"Disegno preliminare su misura",src:"fotos/g20.jpg",svc:"mcej"},
+  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g21.jpg",svc:"mcej"},
+  {c:"lips",es:"Resultado",it:"Risultato",src:"fotos/g22.jpg",svc:"mcej"},
+  {c:"lips",es:"Durante el procedimiento",it:"Durante il trattamento",src:"fotos/g23.jpg",svc:"mcej"},
+  {c:"lips",es:"Micropigmentación de labios",it:"Pigmentazione labbra",video:"fotos/labios.mp4",svc:"mcej"},
   {c:"glu",es:"Electrodos para endurecer el músculo · 15 min",it:"Elettrodi per tonificare il muscolo · 15 min",video:"fotos/electro.mp4",svc:"glu"},
   {c:"glu",es:"Ondas rusas y masoterapia",it:"Correnti russe e massoterapia",src:"fotos/g24.jpg",svc:"glu"},
   {c:"glu",es:"Masaje reafirmante",it:"Massaggio rassodante",src:"fotos/g25.jpg",svc:"glu"},
@@ -983,8 +977,8 @@ SERVICES.forEach((s) => { const pr = s.promoRef && SERVICES.find((x) => x.id ===
 const GCATS = { lash:{es:"Pestañas",it:"Ciglia"}, brow:{es:"Cejas",it:"Sopracciglia"}, lips:{es:"Labios",it:"Labbra"}, glu:{es:"Glúteos",it:"Glutei"} };
 /* Antes y después deslizable: misma clienta, misma posición */
 const BA = [ { before:"fotos/ba1a.jpg", after:"fotos/ba1b.jpg", svc:"mcej", es:"Micropigmentación de cejas", it:"Pigmentazione sopracciglia" } ];
-const COVER = { ext:1, xlash:3, plan:11, mcej:8, msom:13, mlab:20, glu:28, pmup:9 };
-const FLOW_IDS = ["ext", "mlab", "mcej", "xlash", "glu", "msom", "plan"];
+const COVER = { ext:1, xlash:3, plan:11, mcej:8, glu:28, pmup:9 };
+const FLOW_IDS = ["ext", "mcej", "xlash", "glu", "plan"];
 
 const TXT = {
   es:{ hTitle:"Belleza, salud y bienestar", hSub:"Pestañas, maquillaje permanente, rostro, glúteos, depilación y todo tipo de trenzas. Reserva tu cita en 1 minuto.", hCta:"Reservar mi cita",
@@ -1051,7 +1045,8 @@ const showDate = (k) => k ? new Intl.DateTimeFormat(loc(), { day: "numeric", mon
 const normPhone = (v) => { let p = String(v || "").replace(/[^\d+]/g, ""); if (p.startsWith("+")) p = p.slice(1); else if (p.startsWith("00")) p = p.slice(2); else if (/^3\d{8,9}$/.test(p)) p = "39" + p; return p.length >= 8 ? p : ""; };
 let promoMonth = null; // promo del mes (se carga del guardado)
 const allServices = () => (promoMonth ? [promoMonth, ...SERVICES] : SERVICES).filter((x) => promoOn(x) && !x.hidden);
-const svcOf = (id) => allServices().find((s) => s.id === id);
+const SVC_ALIAS = { msom: "mcej", mlab: "mcej" }; // servicios que se juntaron
+const svcOf = (id) => allServices().find((s) => s.id === id) || (SVC_ALIAS[id] ? allServices().find((s) => s.id === SVC_ALIAS[id]) : undefined);
 const durTxt = (s) => (s.known ? s.min + " min" : "~" + (s.min >= 60 ? (s.min / 60).toLocaleString(loc()) + " h" : s.min + " min"));
 const promoOn = (s) => !s.until || s.until >= todayKey();
 const minOpt = (s) => (s.opts && s.opts.length ? Math.min(...s.opts.map((o) => o.price)) : s.price);

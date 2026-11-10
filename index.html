@@ -790,8 +790,50 @@ const SRC_BODY = [...document.body.children].filter((e) => e.hasAttribute("data-
 const SRC_MAIN = document.getElementById("main-js").outerHTML;
 /* ================== CONFIGURACIÓN (editar aquí) ================== */
 const WA_NUMBER = "393930157906";
-const STANDALONE = true; // true en la copia de Netlify
-const ADMIN_URL = "https://claude.ai/artifact/R7Bs59NHDEQAAhR1ZEUwJH";
+const STANDALONE = true; // true en la copia de Cloudflare (manitosdehada.pages.dev)
+/* En la copia de Cloudflare, el guardado va a /api (funciones de Cloudflare). Misma forma que el de Claude. */
+if (STANDALONE) (() => {
+  const TK = "jossi-token";
+  const tok = () => { try { const t = localStorage.getItem(TK) || ""; const exp = +t.split(".")[0] || 0; return exp > Date.now() / 1000 ? t : ""; } catch (e) { return ""; } };
+  const api = async (path, opt = {}) => {
+    const h = Object.assign({}, opt.headers || {}); const t = tok(); if (t) h.Authorization = "Bearer " + t;
+    if (opt.json !== undefined) { h["Content-Type"] = "application/json"; opt.body = JSON.stringify(opt.json); }
+    const r = await fetch("/api/" + path, { method: opt.method || "GET", headers: h, body: opt.body });
+    let j = null; try { j = await r.json(); } catch (e) {}
+    if (!r.ok) { const e = new Error((j && j.error) || "Error " + r.status); e.status = r.status; throw e; }
+    return j;
+  };
+  const subs = {}; // clave -> [fn]
+  const snapOf = (rows) => ({ docs: rows.map((x) => ({ id: x.id, data: () => x.v })) });
+  async function pull(key) {
+    const fns = subs[key] || []; if (!fns.length) return;
+    try {
+      if (key.startsWith("c:")) { const rows = await api("c/" + key.slice(2)); fns.forEach((f) => f.ok(snapOf(rows))); }
+      else { const v = await api("d/" + key.slice(2)); fns.forEach((f) => f.ok({ id: key, data: () => v })); }
+    } catch (e) { fns.forEach((f) => f.err && f.err(e)); }
+  }
+  const touch = (key) => setTimeout(() => pull(key), 50);
+  setInterval(() => { if (!document.hidden) Object.keys(subs).forEach(pull); }, 60000);
+  const listen = (key, ok, err) => { (subs[key] = subs[key] || []).push({ ok, err }); pull(key); return () => {}; };
+  const docRef = (col, id) => ({ id,
+    set: async (v) => { await api(`c/${col}/${id}`, { method: "PUT", json: v }); touch("c:" + col); },
+    update: async (v) => { await api(`c/${col}/${id}`, { method: "PATCH", json: v }); touch("c:" + col); },
+    delete: async () => { await api(`c/${col}/${id}`, { method: "DELETE" }); touch("c:" + col); } });
+  const db = {
+    collection: (col) => ({ onSnapshot: (ok, err) => listen("c:" + col, ok, err), doc: (id) => docRef(col, id),
+      add: async (v) => { const r = await api("c/" + col, { method: "POST", json: v }); touch("c:" + col); return { id: r.id }; } }),
+    doc: (path) => ({ onSnapshot: (ok, err) => listen("d:" + path, ok, err),
+      set: async (v) => { await api("d/" + path, { method: "PUT", json: v }); touch("d:" + path); },
+      delete: async () => { await api("d/" + path, { method: "DELETE" }); touch("d:" + path); } }) };
+  const assets = { upload: async (file) => { const r = await api("upload", { method: "POST", body: file, headers: { "Content-Type": file.type || "application/octet-stream" } }); return { url: r.url }; } };
+  const artifact = { publish: async (html) => {
+    const cat = window.__jossiCatalog; if (!cat) throw new Error("No encontré el catálogo");
+    await api("catalog", { method: "PUT", body: cat, headers: { "Content-Type": "application/json" } }); setTimeout(() => location.reload(), 900); } };
+  const user = { canEdit: async () => { if (!tok()) return false; try { await api("me"); return true; } catch (e) { return false; } } };
+  window.JOSSI_API = { api, setToken: (t) => { try { localStorage.setItem(TK, t); } catch (e) {} }, clear: () => { try { localStorage.removeItem(TK); } catch (e) {} } };
+  window.claude = { use: async (ns) => ({ db, assets, artifact, user })[ns] || null };
+})();
+const ADMIN_URL = "";
 const PAGE_URL = "https://manitosdehada.pages.dev/"; // enlace público de la página
 const OPEN = {1:["09:30","19:00"],2:["09:30","19:00"],3:["09:30","19:00"],4:["09:30","19:00"],5:["09:30","19:00"],6:["09:30","15:00"]}; // 0=dom ... 6=sáb (A CONFIRMAR)
 const CLOSED_DATES = ["2026-12-25","2026-12-26","2027-01-01"];
@@ -1426,7 +1468,7 @@ function saveErr(err) { return "No se pudo guardar. " + (err && err.message ? er
 async function startData() {
   if (dataStarted) return; dataStarted = true;
   if (!db) { try { const c = window.claude; db = c && c.use ? await c.use("db") : null; } catch (e) {} }
-  if (!db) { const m = '<div class="empty">No se pudo abrir el guardado. Abre esta página desde tu cuenta de claude.ai.</div>'; ["t-list","appts","cards"].forEach((id) => $(id).innerHTML = m); return; }
+  if (!db) { const m = '<div class="empty">No se pudo abrir el guardado. Toca la corona y vuelve a entrar con tu código.</div>'; ["t-list","appts","cards"].forEach((id) => $(id).innerHTML = m); return; }
   const timer = setTimeout(() => setStatus("a-status", "Todavía no se pueden leer los datos. Revisa la conexión.", true), 10000);
   const fail = () => { clearTimeout(timer); setStatus("a-status", "No se pudieron cargar los datos.", true); };
   db.collection("appts").onSnapshot((snap) => { clearTimeout(timer); apptsLoaded = true;
@@ -1743,7 +1785,7 @@ function shrink(file) {
 async function uploadFiles(card, files) {
   const i = +card.dataset.ci, x = EDIT_S[i], st = card.querySelector('[data-st="up"]');
   if (!assetsNs) { try { const c = window.claude; assetsNs = c && c.use ? await c.use("assets") : null; } catch (e) { assetsNs = null; } }
-  if (!assetsNs) { st.textContent = "No se pueden subir fotos desde aquí. Abre la página desde tu cuenta de claude.ai."; st.className = "status err"; return; }
+  if (!assetsNs) { st.textContent = "No se pudieron subir las fotos. Toca la corona y vuelve a entrar con tu código."; st.className = "status err"; return; }
   readForm(card, x); x.fotos = x.fotos || [];
   const list = [...files]; let n = 0;
   for (const f of list) {
@@ -1758,6 +1800,7 @@ async function uploadFiles(card, files) {
 function buildPage() {
   const clean = EDIT_S.map((x) => { const y = JSON.parse(JSON.stringify(x)); if (y.opts) { y.opts = y.opts.filter((o) => o.es && o.price != null); if (!y.opts.length) delete y.opts; } return y; });
   const json = JSON.stringify({ services: clean, gal: EDIT_G, savedAt: new Date().toISOString() }).replace(/</g, "\\u003c");
+  window.__jossiCatalog = json;
   const body = SRC_BODY.join("\n");
   return '<!DOCTYPE html>\n<html lang="es">\n<head>\n' + SRC_HEAD.join("\n") + '\n</head>\n<body>\n' + body + '\n<script type="application/json" id="catalog-data">' + json + '</' + 'script>\n' + SRC_MAIN + '\n</body>\n</html>\n';
 }
@@ -1765,7 +1808,7 @@ $("cat-pub").addEventListener("click", async () => {
   const open = catOpen != null && $("cat-list").querySelector(`[data-ci="${catOpen}"]`); if (open) readForm(open, EDIT_S[catOpen]);
   setStatus("cat-status", "Publicando…");
   let art = null; try { const c = window.claude; art = c && c.use ? await c.use("artifact") : null; } catch (e) {}
-  if (!art) { setStatus("cat-status", "No se pudo publicar desde aquí. Abre la página desde tu cuenta de claude.ai.", true); return; }
+  if (!art) { setStatus("cat-status", "No se pudo publicar. Toca la corona y vuelve a entrar con tu código.", true); return; }
   try { await art.publish(buildPage()); catDirty = false; $("cat-bar").hidden = true; setStatus("cat-status", "Publicado. La página se recarga con tus cambios."); }
   catch (err) { const m = String(err && (err.code || err.message) || ""); setStatus("cat-status", /conflict/i.test(m) ? "Alguien publicó otra versión justo ahora. Vuelve a hacer el cambio." : "No se pudo publicar. " + m, true); }
 });
@@ -1773,8 +1816,8 @@ $("cat-undo").addEventListener("click", () => { EDIT_S = JSON.parse(JSON.stringi
 window.addEventListener("beforeunload", (e) => { if (catDirty) { e.preventDefault(); e.returnValue = ""; } });
 
 /* ---------- acceso de Jossi con código (la corona de arriba) ---------- */
-/* El código abre el panel en esta pantalla. Guardar cambios sigue necesitando la cuenta de claude.ai de Jossi. */
-const PIN_HASH = "fcb0e0728fde457e0f70b8e987559b29c7ac5c38da097f2ea2665aa0c381d938";
+/* El código abre el panel en esta pantalla. En Cloudflare el código se comprueba en el servidor. */
+const PIN_HASH = "";
 let pinOk = false, pinVal = "", pinFails = 0, pinLockUntil = 0;
 try { pinOk = sessionStorage.getItem("jossi-pin") === "1"; } catch (e) {}
 async function sha(txt) { try { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt)); return [...new Uint8Array(b)].map((x) => x.toString(16).padStart(2, "0")).join(""); } catch (e) { return ""; } }
@@ -1787,10 +1830,14 @@ function pinOpen() {
 function pinClose() { $("pin").hidden = true; pinVal = ""; }
 async function pinCheck() {
   if (Date.now() < pinLockUntil) { setStatus("pin-st", "Demasiados intentos. Espera un momento.", true); pinVal = ""; pinRender(); return; }
-  const ok = (await sha("jossi-manitos:" + pinVal)) === PIN_HASH;
-  if (ok && STANDALONE) { pinClose(); location.href = ADMIN_URL; return; }
+  let ok = false;
+  if (STANDALONE) {
+    try { const r = await window.JOSSI_API.api("login", { method: "POST", json: { pin: pinVal } }); window.JOSSI_API.setToken(r.token); ok = true; isOwner = true; }
+    catch (e) { if (e.status === 429) { setStatus("pin-st", "Demasiados intentos. Espera unos minutos.", true); pinVal = ""; $("pin-in").value = ""; pinRender(); return; }
+      if (e.status !== 401) { setStatus("pin-st", "No se pudo comprobar el código. " + e.message, true); pinVal = ""; $("pin-in").value = ""; pinRender(); return; } }
+  } else ok = (await sha("jossi-manitos:" + pinVal)) === PIN_HASH;
   if (ok) { pinOk = true; pinFails = 0; try { sessionStorage.setItem("jossi-pin", "1"); } catch (e) {} pinClose(); showTab("today");
-    if (!isOwner) setTimeout(() => setStatus("paste-status", "Para guardar cambios, abre la página con tu cuenta de claude.ai.", true), 300); return; }
+    if (!isOwner) setTimeout(() => setStatus("paste-status", "Toca la corona y vuelve a entrar con tu código.", true), 300); return; }
   pinFails++; if (pinFails >= 5) { pinLockUntil = Date.now() + 60000; pinFails = 0; }
   setStatus("pin-st", "Código incorrecto. Prueba otra vez.", true); $("pin-dots").classList.add("shake"); setTimeout(() => $("pin-dots").classList.remove("shake"), 400);
   pinVal = ""; $("pin-in").value = ""; pinRender();
@@ -1807,7 +1854,7 @@ $("pin").addEventListener("click", (e) => { if (e.target.id === "pin") pinClose(
 applyLang(); showTab("home"); renderMonth();
 (async () => {
   try { const c = window.claude; const user = c && c.use ? await c.use("user") : null;
-    if (user && typeof user.canEdit === "function" && await user.canEdit()) { isOwner = true; syncBusy(); }
+    if (user && typeof user.canEdit === "function" && await user.canEdit()) { isOwner = true; if (STANDALONE) pinOk = true; syncBusy(); }
   } catch (e) {}
 })();
 </script>

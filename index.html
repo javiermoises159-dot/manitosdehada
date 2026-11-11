@@ -862,7 +862,7 @@ let SERVICES = [
     opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:30},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:50}],
     es:{ name:"Extensión de pestañas 1x1 extra lash", desc:"Más largas y con más volumen · duran de 2 a 3 semanas · ven con una amiga: 2 por 50 €" },
     it:{ name:"Extension ciglia 1x1 extra lash", desc:"Più lunghe e voluminose · durano 2–3 settimane · vieni con un'amica: 2 a 50 €" } },
-  { id:"riz", cat:"lash", ic:"🌀", price:40, min:45, care:"lift",
+  { id:"riz", cat:"lash", ic:"🌀", price:40, min:45, fotos:[34], care:"lift",
     opts:[{es:"Una persona",it:"Una persona",msg:{es:"una persona",it:"una persona"},price:40},{es:"Dos personas (tú + una amiga) · promo",it:"Due persone (tu + un'amica) · promo",msg:{es:"promo 2 personas, voy con una amiga",it:"promo 2 persone, vengo con un'amica"},price:60}],
     es:{ name:"Rizado de pestañas", desc:"A prueba de agua · ven con una amiga: 2 por 60 €" }, it:{ name:"Laminazione ciglia", desc:"Resistente all'acqua · vieni con un'amica: 2 a 60 €" } },
   { id:"plan", cat:"lash", ic:"〰️", price:30, min:45, fotos:[11], care:"lift",
@@ -879,23 +879,23 @@ let SERVICES = [
       {es:"4to paquete - seis sesiones + dos peptonas",it:"4° pacchetto - sei sedute + due peptoni",price:430}],
     es:{ name:"Levantamiento de glúteos", desc:"Ondas rusas + masoterapia + electrodos · 50 € por sesión o en paquetes" },
     it:{ name:"Lifting glutei", desc:"Correnti russe + massoterapia + elettrodi · 50 € a seduta o a pacchetti" } },
-  { id:"rej", cat:"face", ic:"🌸", price:120, min:60, care:"face",
+  { id:"rej", cat:"face", ic:"🌸", price:120, min:60, fotos:[31,32], care:"face",
     opts:[{es:"Una sesión",it:"Una seduta",price:120},{es:"1er paquete - tres sesiones",it:"1° pacchetto - tre sedute",price:330},{es:"2do paquete - cinco sesiones",it:"2° pacchetto - cinque sedute",price:450}],
     es:{ name:"Rejuvenecimiento facial", desc:"Con PDRN (esperma de salmón) · 120 € por sesión · paquetes de 3 y 5 sesiones" },
     it:{ name:"Ringiovanimento viso", desc:"Con PDRN (DNA di salmone) · 120 € a seduta · pacchetti da 3 e 5 sedute" } },
-  { id:"limp", cat:"face", ic:"🫧", price:80, min:60, care:"face",
+  { id:"limp", cat:"face", ic:"🫧", price:80, min:60, fotos:[33], care:"face",
     es:{ name:"Limpieza facial profunda", desc:"Limpieza profunda de la piel del rostro" }, it:{ name:"Pulizia viso profonda", desc:"Pulizia profonda della pelle del viso" } },
   { id:"limps", cat:"face", ic:"🧼", price:60, min:45, care:"face",
     es:{ name:"Limpieza facial simple", desc:"Limpieza e hidratación básica" }, it:{ name:"Pulizia viso semplice", desc:"Pulizia e idratazione di base" } },
-  { id:"hid", cat:"face", ic:"💧", price:40, min:45, care:"face",
+  { id:"hid", cat:"face", ic:"💧", price:40, min:45, fotos:[31], care:"face",
     es:{ name:"Hidratación de rostro con dermapen", desc:"Piel suave, luminosa e hidratada" }, it:{ name:"Idratazione viso con dermapen", desc:"Pelle morbida, luminosa e idratata" } },
   { id:"cera", cat:"wax", ic:"🍯", price:null, min:30, care:"wax", multi:true, opts:zopts(ZONES_WAX),
     es:{ name:"Depilación con cera", desc:"Elige una o varias zonas" }, it:{ name:"Ceretta", desc:"Scegli una o più zone" } },
   { id:"crema", cat:"wax", ic:"🧴", price:null, min:30, care:"wax", multi:true, opts:zopts(ZONES_WAX),
     es:{ name:"Depilación con crema depiladora", desc:"Elige una o varias zonas" }, it:{ name:"Crema depilatoria", desc:"Scegli una o più zone" } },
-  { id:"hilo", cat:"wax", ic:"🧵", price:null, min:20, care:"wax", multi:true, opts:zopts(ZONES_HILO),
+  { id:"hilo", cat:"wax", ic:"🧵", price:null, min:20, fotos:[35], care:"wax", multi:true, opts:zopts(ZONES_HILO),
     es:{ name:"Depilación con hilo · rostro", desc:"Elige una o varias zonas" }, it:{ name:"Epilazione con filo · viso", desc:"Scegli una o più zone" } },
-  { id:"tren", cat:"braid", ic:"💇‍♀️", price:30, from:true, min:120, care:"braid",
+  { id:"tren", cat:"braid", ic:"💇‍♀️", price:30, from:true, min:120, fotos:[36], care:"braid",
     es:{ name:"Todo tipo de trenzas", desc:"Desde 30 €, según el tipo de trenza · cuéntale el modelo en el comentario" },
     it:{ name:"Treccine di ogni tipo", desc:"Da 30 €, secondo il tipo di treccia · descrivi il modello nel commento" } }
 ];
@@ -967,7 +967,13 @@ let GAL = [
   {c:"glu",es:"Ondas rusas, masoterapia y electrodos",it:"Correnti russe, massoterapia ed elettrodi",src:"fotos/g26.jpg",svc:"glu"},
   {c:"glu",es:"Resultado con ondas rusas, masoterapia y electrodos",it:"Risultato con correnti russe, massoterapia ed elettrodi",src:"fotos/g27.jpg",svc:"glu"},
   {c:"glu",es:"Glúteos · vista trasera",it:"Glutei · vista posteriore",src:"fotos/g28.jpg",svc:"glu"},
-  {c:"glu",es:"Glúteos · vista de perfil",it:"Glutei · vista laterale",src:"fotos/g29.jpg",svc:"glu"}
+  {c:"glu",es:"Glúteos · vista de perfil",it:"Glutei · vista laterale",src:"fotos/g29.jpg",svc:"glu"},
+  {c:"face",es:"Dermapen con ácido hialurónico",it:"Dermapen con acido ialuronico",src:"fotos/g30.jpg",svc:"rej"},
+  {c:"face",es:"Rejuvenecimiento con dermapen",it:"Ringiovanimento con dermapen",src:"fotos/g31.jpg",svc:"rej"},
+  {c:"face",es:"Limpieza facial",it:"Pulizia viso",src:"fotos/g32.jpg",svc:"limp"},
+  {c:"lash",es:"Rizado de pestañas",it:"Laminazione ciglia",src:"fotos/g33.jpg",svc:"riz"},
+  {c:"brow",es:"Depilación con hilo",it:"Epilazione con filo",src:"fotos/g34.jpg",svc:"hilo"},
+  {c:"braid",es:"Trenzas",it:"Trecce",src:"fotos/g35.jpg",svc:"tren"}
 ];
 /* catálogo guardado por Jossi desde su panel (si existe, reemplaza el de arriba) */
 let CATALOG_RAW = null; try { CATALOG_RAW = JSON.parse(document.getElementById("catalog-data").textContent); } catch (e) {}
